@@ -8,18 +8,16 @@ import onnxruntime as ort
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import pandas as pd
-from playsound import playsound
-import threading
 
 # Config
 st.set_page_config(page_title="ComplianceCam  - Helmet Detection", page_icon="🪖", layout="wide")
 
 # Constants
-MODEL_PATH = "C:/Users/makwa/Downloads/Helmet-Compliance-Project-main/Helmet-Compliance-Project-main/best.onnx"
+MODEL_PATH = "best.onnx"
 LABELS = ["NO Helmet", "ON. Helmet"]
-ALARM_PATH = "C:/Users/makwa/Downloads/Helmet-Compliance-Project-main/Helmet-Compliance-Project-main/alarm.mp3"
-SAVE_DIR = "C:/Users/makwa/Downloads/Helmet-Compliance-Project-main/Helmet-Compliance-Project-main/violations"
-LOGO_PATH = "C:/Users/makwa/Downloads/Helmet-Compliance-Project-main/Helmet-Compliance-Project-main/logo.png"
+ALARM_PATH = "alarm.mp3"
+SAVE_DIR = "violations"
+LOGO_PATH = "logo.png"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 # Load ONNX Model
@@ -51,8 +49,7 @@ def postprocess(outputs, threshold=0.3):  # Lowered threshold for sensitivity
 
 # Alarm
 def play_alarm():
-    threading.Thread(target=playsound, args=(ALARM_PATH,), daemon=True).start()
-
+    st.warning("violation")
 # Sidebar UI
 st.sidebar.image(LOGO_PATH, use_container_width=True)
 st.sidebar.markdown(
