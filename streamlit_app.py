@@ -8,10 +8,14 @@ import onnxruntime as ort
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import pandas as pd
+import zipfile
+
 
 # Config
 st.set_page_config(page_title="ComplianceCam  - Helmet Detection", page_icon="🪖", layout="wide")
-
+if not os.path.exists("best.onnx"):
+    with zipfile.ZipFile("model.zip", 'r') as zip_ref:
+        zip_ref.extractall(".")
 # Constants
 MODEL_PATH = "best.onnx"
 LABELS = ["NO Helmet", "ON. Helmet"]
